@@ -14,6 +14,7 @@ router.get('/me', passport.authenticate('jwt', { session: false }), login);
 
 
 async function register(req, res, next) {
+  console.log('req.body');
   let user = await userCtrl.insert(req.body);
   user = user.toObject();
   delete user.hashedPassword;
@@ -24,5 +25,6 @@ async function register(req, res, next) {
 function login(req, res) {
   let user = req.user;
   let token = authCtrl.generateToken(user);
+  console.log('token:' + token);
   res.json({ user, token });
 }
